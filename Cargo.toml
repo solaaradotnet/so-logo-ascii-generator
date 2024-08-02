@@ -1,0 +1,9 @@
+[package]
+name = "so-logo-ascii-generator"
+version = "0.1.0"
+edition = "2021"
+authors = ["IAMSolaara"]
+
+[dependencies]
+clap = { version = "4.5.13", features = ["derive"] }
+figrs = "0.3.1"
