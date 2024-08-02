@@ -7,3 +7,4 @@ authors = ["IAMSolaara"]
 [dependencies]
 clap = { version = "4.5.13", features = ["derive"] }
 figrs = "0.3.1"
+chrono = "0.4.38"
