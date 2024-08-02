@@ -1,8 +1,7 @@
 use clap::Parser;
 use figrs::{Figlet, FigletOptions};
 
-const SOLAARA_LOGO_TOP_HALF: &str = "
-                 =@-            
+const SOLAARA_LOGO_TOP_HALF: &str = "                 =@-            
      =%.         *@:          . 
      .%@=        %@.        .=@#
        =@%.    ..-=.      .*@@: 
