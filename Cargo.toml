@@ -1,10 +1,3 @@
-[package]
-name = "so-logo-ascii-generator"
-version = "0.2.0"
-edition = "2021"
-authors = ["IAMSolaara"]
-
-[dependencies]
-clap = { version = "4.5.13", features = ["derive"] }
-figrs = "0.3.1"
-chrono = "0.4.38"
+[workspace]
+resolver = "2"
+members = ["cli", "core"]

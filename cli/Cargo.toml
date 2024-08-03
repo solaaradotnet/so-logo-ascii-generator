@@ -1,0 +1,10 @@
+[package]
+name = "so-logo-ascii-generator"
+version = "0.3.0"
+edition = "2021"
+authors = ["IAMSolaara"]
+
+[dependencies]
+so-logo-ascii-generator-core = { path = "../core/" }
+anyhow = "1.0.86"
+clap = { version = "4.5.13", features = ["derive"] }
