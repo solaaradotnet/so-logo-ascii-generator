@@ -2,6 +2,7 @@ use chrono::Datelike;
 use figrs::{Figlet, FigletOptions};
 use std::cmp::max;
 
+/// solaara logo split up in convenient sections
 const SOLAARA_LOGO_TOP_HALF: &str = "                 =@-
      =%.         *@:          .
      .%@=        %@.        .=@#
@@ -20,15 +21,20 @@ const SOLAARA_LOGO_BOTTOM_HALF: &str = "        +@.
               .@@.";
 const SOLAARA_LOGO_LAST_ROW: &str = "              :@% ";
 
+/// main generate function
 pub fn generate(msg: &str, with_copyright: bool) -> Result<String, SoLogoAsciiGeneratorError> {
     let opt = FigletOptions {
         font: "Big".to_string(), // Default font is "Standard"
         ..FigletOptions::default()
     };
+
+    // create a figlet-like text
     let figure = Figlet::text(msg.to_owned(), opt)
         .map_err(SoLogoAsciiGeneratorError::TextGenerationError)?
         .text;
 
+    // stitch the bottom half of the logo with the figlet and get the max length of the whole thing
+    // aswell
     let (bottom_half_with_text, max_width) = SOLAARA_LOGO_BOTTOM_HALF
         .lines()
         .zip(figure.lines())
@@ -40,15 +46,19 @@ pub fn generate(msg: &str, with_copyright: bool) -> Result<String, SoLogoAsciiGe
             acc
         });
 
+    // if we want the copyright text, generate it and stitch it together with the last row
     let last_row_copyright_text = if with_copyright {
         let current_time = chrono::Local::now();
         let current_year = current_time.year();
         let copyright_string = format!("(C) Solaara's Network {}", current_year);
 
         let padding_length = if max_width >= (SOLAARA_LOGO_LAST_ROW.len() + copyright_string.len())
+        // if the total width of the logo text is large enough for the copyright string to fit
         {
+            // pad it so the copyright text is right aligned and flush with the logo text
             max_width - SOLAARA_LOGO_LAST_ROW.len() - copyright_string.len()
         } else {
+            // else pad it with 4 spaces (quite arbitrary)
             4
         };
 
@@ -57,12 +67,14 @@ pub fn generate(msg: &str, with_copyright: bool) -> Result<String, SoLogoAsciiGe
         "".to_owned()
     };
 
+    // assemble the whole thing
     Ok(SOLAARA_LOGO_TOP_HALF.to_owned()
         + &bottom_half_with_text
         + SOLAARA_LOGO_LAST_ROW
         + &last_row_copyright_text)
 }
 
+/// main error handling enum
 #[derive(thiserror::Error, Debug)]
 pub enum SoLogoAsciiGeneratorError {
     #[error("Error generating ascii art text: {0}")]
