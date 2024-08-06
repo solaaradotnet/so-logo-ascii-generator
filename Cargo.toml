@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
 members = ["cli", "core"]
+license = "BSD-3-Clause"
 
 [profile.release]
 strip = true    # Automatically strip symbols from the binary.
