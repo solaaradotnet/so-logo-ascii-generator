@@ -1,5 +1,6 @@
+use so_logo_ascii_generator::generate;
+
 use clap::Parser;
-use so_logo_ascii_generator_core::generate;
 
 #[derive(Debug, Parser)]
 struct CliArgs {

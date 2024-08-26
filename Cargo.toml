@@ -1,7 +1,24 @@
-[workspace]
-resolver = "2"
-members = ["cli", "core"]
+[package]
+name = "so-logo-ascii-generator"
+version = "0.4.0"
+edition = "2021"
+authors = ["IAMSolaara"]
 license = "BSD-3-Clause"
+
+[dependencies]
+figrs = "0.3.1"
+chrono = "0.4.38"
+thiserror = "1.0.63"
+
+anyhow = { version = "1.0.86", optional = true }
+clap = { version = "4.5.13", features = ["derive"], optional = true }
+
+[features]
+build-binary = ["anyhow", "clap"]
+
+[[bin]]
+name = "cli"
+required-features = ["build-binary"]
 
 [profile.release]
 strip = true    # Automatically strip symbols from the binary.
