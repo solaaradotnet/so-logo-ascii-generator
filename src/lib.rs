@@ -22,9 +22,13 @@ const SOLAARA_LOGO_BOTTOM_HALF: &str = "        +@.
 const SOLAARA_LOGO_LAST_ROW: &str = "              :@% ";
 
 /// main generate function
-pub fn generate(msg: &str, with_copyright: bool) -> Result<String, SoLogoAsciiGeneratorError> {
+pub fn generate(
+    msg: &str,
+    with_copyright: bool,
+    font: TextFont,
+) -> Result<String, SoLogoAsciiGeneratorError> {
     let opt = FigletOptions {
-        font: "Big".to_string(), // Default font is "Standard"
+        font: font.to_string(),
         ..FigletOptions::default()
     };
 
@@ -74,9 +78,30 @@ pub fn generate(msg: &str, with_copyright: bool) -> Result<String, SoLogoAsciiGe
         + &last_row_copyright_text)
 }
 
+#[derive(Copy, Clone, Default, Debug)]
+pub enum TextFont {
+    #[default]
+    Big,
+}
+
+impl std::fmt::Display for TextFont {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                TextFont::Big => "Big",
+            }
+        )
+    }
+}
+
 /// main error handling enum
 #[derive(thiserror::Error, Debug)]
 pub enum SoLogoAsciiGeneratorError {
     #[error("Error generating ascii art text: {0}")]
     TextGenerationError(String),
+
+    #[error("Invalid font specified: {0}")]
+    InvalidFont(String),
 }
