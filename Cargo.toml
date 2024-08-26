@@ -17,7 +17,8 @@ clap = { version = "4.5.13", features = ["derive"], optional = true }
 build-binary = ["anyhow", "clap"]
 
 [[bin]]
-name = "cli"
+name = "so-logo-ascii-generator"
+path = "src/bin/cli.rs"
 required-features = ["build-binary"]
 
 [profile.release]
