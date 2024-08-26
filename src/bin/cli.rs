@@ -3,6 +3,7 @@ use so_logo_ascii_generator::generate;
 use clap::Parser;
 
 #[derive(Debug, Parser)]
+#[command(version, about, long_about = None)]
 struct CliArgs {
     pub text: String,
 
