@@ -37,6 +37,12 @@ pub fn generate(
         .map_err(SoLogoAsciiGeneratorError::TextGenerationError)?
         .text;
 
+    // fix if font is
+    let figure = match font {
+        TextFont::Shadow => "\n".to_string() + &figure,
+        _ => figure,
+    };
+
     // stitch the bottom half of the logo with the figlet and get the max length of the whole thing
     // aswell
     let (bottom_half_with_text, max_width) = SOLAARA_LOGO_BOTTOM_HALF
@@ -82,6 +88,7 @@ pub fn generate(
 pub enum TextFont {
     #[default]
     Big,
+    Shadow,
 }
 
 impl std::fmt::Display for TextFont {
@@ -91,6 +98,7 @@ impl std::fmt::Display for TextFont {
             "{}",
             match self {
                 TextFont::Big => "Big",
+                TextFont::Shadow => "Shadow",
             }
         )
     }

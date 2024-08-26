@@ -18,12 +18,14 @@ struct CliArgs {
 enum CliTextFont {
     #[default]
     Big,
+    Shadow,
 }
 
 impl From<CliTextFont> for so_logo_ascii_generator::TextFont {
     fn from(value: CliTextFont) -> Self {
         match value {
             CliTextFont::Big => Self::Big,
+            CliTextFont::Shadow => Self::Shadow,
         }
     }
 }
