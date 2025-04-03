@@ -18,17 +18,38 @@
         };
 
         naersk' = pkgs.callPackage naersk {};
-      in {
-        # For `nix build` & `nix run`:
-        defaultPackage = naersk'.buildPackage {
+
+        so-logo-ascii-generator-pkg = naersk'.buildPackage {
           src = ./.;
           cargoBuildOptions = opts: opts ++ ["--features=build-binary"];
         };
+      in {
+        packages = {
+          so-logo-ascii-generator = so-logo-ascii-generator-pkg;
+          default = so-logo-ascii-generator-pkg;
+        };
+
+        # For `nix build` & `nix run`:
+        defaultPackage = so-logo-ascii-generator-pkg;
 
         # For `nix develop`:
         devShell = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [rustc cargo];
         };
       }
-    );
+    )
+    // {
+      meta = {
+        description = "Rust crate and cli to generate solaaradotnet branded logos.";
+        homepage = "https://github.com/solaaradotnet/so-logo-ascii-generator.git";
+        license = nixpkgs.lib.licenses.bsd3;
+        maintainers = [
+          {
+            name = "Solaara Evermore";
+            github = "iamsolaara";
+            githubId = 17319563;
+          }
+        ];
+      };
+    };
 }
